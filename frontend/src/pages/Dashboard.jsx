@@ -3,8 +3,9 @@ import { useAuth } from '../context/AuthContext.jsx';
 import axios from 'axios';
 import { Plus, Edit3, Trash2, Eye, Calendar, Clock, FileText } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { getApiUrl } from '../utils/apiUrl.js';
 
-const API_URL = import.meta.env.VITE_API_URL || '/api';
+const API_URL = getApiUrl();
 
 const Dashboard = () => {
   const { user } = useAuth();

@@ -1,9 +1,10 @@
 import React, { createContext, useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import { getApiUrl } from '../utils/apiUrl.js';
 
 const AuthContext = createContext();
 
-const API_URL = import.meta.env.VITE_API_URL || '/api';
+const API_URL = getApiUrl();
 
 export const useAuth = () => useContext(AuthContext);
 

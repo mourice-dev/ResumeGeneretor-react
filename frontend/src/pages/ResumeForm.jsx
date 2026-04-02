@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import { getApiUrl } from '../utils/apiUrl.js';
 
-const API_URL = import.meta.env.VITE_API_URL || '/api';
+const API_URL = getApiUrl();
 import {
   ChevronRight,
   ChevronLeft,
