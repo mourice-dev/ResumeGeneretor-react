@@ -25,6 +25,7 @@ export const handler = async (event, context) => {
       [email],
     );
     if (userExists.length > 0) {
+      console.warn(`Registration failed: User already exists ${email}`);
       return cors({
         statusCode: 400,
         body: JSON.stringify({ message: "User already exists" }),
@@ -39,6 +40,7 @@ export const handler = async (event, context) => {
       [full_name, email, hashedPassword],
     );
 
+    console.log(`Registration successful for ${email} with id ${newUser[0].id}`);
     return cors({
       statusCode: 201,
       body: JSON.stringify({
@@ -49,6 +51,7 @@ export const handler = async (event, context) => {
       }),
     });
   } catch (error) {
+    console.error("Registration error:", error.message);
     return cors({
       statusCode: 500,
       body: JSON.stringify({ message: error.message }),

@@ -25,6 +25,7 @@ export const handler = async (event, context) => {
       [email],
     );
     if (userResult.length === 0) {
+      console.error(`Login failed: User not found for email ${email}`);
       return cors({
         statusCode: 401,
         body: JSON.stringify({ message: "Invalid email or password" }),
@@ -45,12 +46,14 @@ export const handler = async (event, context) => {
         }),
       });
     } else {
+      console.error(`Login failed: Password mismatch for email ${email}`);
       return cors({
         statusCode: 401,
         body: JSON.stringify({ message: "Invalid email or password" }),
       });
     }
   } catch (error) {
+    console.error("Login error:", error.message);
     return cors({
       statusCode: 500,
       body: JSON.stringify({ message: error.message }),
