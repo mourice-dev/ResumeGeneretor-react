@@ -3,6 +3,34 @@
   functions = "netlify/functions"
   publish = "frontend/dist"
 
+[build.environment]
+  NODE_VERSION = "18"
+
+[[redirects]]
+  from = "/api/auth/login"
+  to = "/.netlify/functions/auth-login"
+  status = 200
+
+[[redirects]]
+  from = "/api/auth/register"
+  to = "/.netlify/functions/auth-register"
+  status = 200
+
+[[redirects]]
+  from = "/api/auth/profile"
+  to = "/.netlify/functions/auth-profile"
+  status = 200
+
+[[redirects]]
+  from = "/api/resumes/:id"
+  to = "/.netlify/functions/resumes-id?id=:id"
+  status = 200
+
+[[redirects]]
+  from = "/api/resumes"
+  to = "/.netlify/functions/resumes"
+  status = 200
+
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
@@ -10,4 +38,3 @@
 
 [functions]
   external_node_modules = ["postgres", "bcrypt", "jsonwebtoken"]
-  nodejs_version = "18"

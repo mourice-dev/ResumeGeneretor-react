@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext.jsx';
 import axios from 'axios';
-import { Plus, Edit3, Trash2, Eye, Calendar, Clock } from 'lucide-react';
+import { Plus, Edit3, Trash2, Eye, Calendar, Clock, FileText } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -17,7 +19,7 @@ const Dashboard = () => {
 
   const fetchResumes = async () => {
     try {
-      const res = await axios.get('/.netlify/functions/resumes-list', {
+      const res = await axios.get(`${API_URL}/resumes`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       setResumes(res.data);
@@ -29,7 +31,7 @@ const Dashboard = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this resume?')) {
       try {
-        await axios.delete(`/.netlify/functions/resumes-delete?id=${id}`, {
+        await axios.delete(`${API_URL}/resumes/${id}`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         });
         fetchResumes();

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 import {
   ChevronRight,
   ChevronLeft,
@@ -41,7 +43,7 @@ const ResumeForm = () => {
     if (id) {
       const fetchResume = async () => {
         try {
-          const res = await axios.get(`/.netlify/functions/resumes-get-one?id=${id}`, {
+          const res = await axios.get(`${API_URL}/resumes/${id}`, {
             headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
           });
           setFormData(res.data);
@@ -86,11 +88,11 @@ const ResumeForm = () => {
     setLoading(true);
     try {
       if (id) {
-        await axios.put(`/.netlify/functions/resumes-update?id=${id}`, formData, {
+        await axios.put(`${API_URL}/resumes/${id}`, formData, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         });
       } else {
-        await axios.post('/.netlify/functions/resumes-create', formData, {
+        await axios.post(`${API_URL}/resumes`, formData, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         });
       }

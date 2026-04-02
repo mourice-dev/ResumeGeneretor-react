@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
 import {
   Printer,
   ArrowLeft,
@@ -22,7 +24,7 @@ const ResumePreview = () => {
   useEffect(() => {
     const fetchResume = async () => {
       try {
-        const res = await axios.get(`/.netlify/functions/resumes-get-one?id=${id}`, {
+        const res = await axios.get(`${API_URL}/resumes/${id}`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         });
         setResume(res.data);
