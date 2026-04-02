@@ -143,15 +143,15 @@ const ResumeForm = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6">
                 <div className="space-y-1">
                   <label className="text-xs font-bold uppercase text-gray-400 tracking-widest">Resume Title</label>
-                  <input type="text" name="title" value={formData.title} onChange={handleChange} placeholder="e.g. Senior Software Engineer" className="input-field" />
+                  <input type="text" name="title" value={formData.title} onChange={handleChange} placeholder="e.g. Software Engineer" className="input-field" />
                 </div>
                 <div className="space-y-1">
                   <label className="text-xs font-bold uppercase text-gray-400 tracking-widest">Full Name</label>
-                  <input type="text" name="full_name" value={formData.full_name} onChange={handleChange} placeholder="John Doe" className="input-field" />
+                  <input type="text" name="full_name" value={formData.full_name} onChange={handleChange} placeholder="Your Full Name" className="input-field" />
                 </div>
                 <div className="space-y-1">
                   <label className="text-xs font-bold uppercase text-gray-400 tracking-widest">Email</label>
-                  <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="john@example.com" className="input-field" />
+                  <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="your@email.com" className="input-field" />
                 </div>
                 <div className="space-y-1">
                   <label className="text-xs font-bold uppercase text-gray-400 tracking-widest">Phone</label>
@@ -191,11 +191,11 @@ const ResumeForm = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       <div className="space-y-1">
                         <label className="text-[10px] font-bold uppercase text-gray-400 tracking-widest">Institution</label>
-                        <input type="text" name="institution" value={edu.institution} onChange={(e) => handleItemChange('education', idx, e)} placeholder="University of X" className="input-field bg-white" />
+                        <input type="text" name="institution" value={edu.institution} onChange={(e) => handleItemChange('education', idx, e)} placeholder="University Name" className="input-field bg-white" />
                       </div>
                       <div className="space-y-1">
                         <label className="text-[10px] font-bold uppercase text-gray-400 tracking-widest">Degree</label>
-                        <input type="text" name="degree" value={edu.degree} onChange={(e) => handleItemChange('education', idx, e)} placeholder="Bachelor of Science" className="input-field bg-white" />
+                        <input type="text" name="degree" value={edu.degree} onChange={(e) => handleItemChange('education', idx, e)} placeholder="Degree Name" className="input-field bg-white" />
                       </div>
                       <div className="space-y-1">
                         <label className="text-[10px] font-bold uppercase text-gray-400 tracking-widest">Start Date</label>
@@ -234,11 +234,11 @@ const ResumeForm = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       <div className="space-y-1">
                         <label className="text-[10px] font-bold uppercase text-gray-400 tracking-widest">Company</label>
-                        <input type="text" name="company" value={exp.company} onChange={(e) => handleItemChange('experience', idx, e)} placeholder="Google Inc." className="input-field bg-white" />
+                        <input type="text" name="company" value={exp.company} onChange={(e) => handleItemChange('experience', idx, e)} placeholder="Company Name" className="input-field bg-white" />
                       </div>
                       <div className="space-y-1">
                         <label className="text-[10px] font-bold uppercase text-gray-400 tracking-widest">Position</label>
-                        <input type="text" name="position" value={exp.position} onChange={(e) => handleItemChange('experience', idx, e)} placeholder="Software Engineer" className="input-field bg-white" />
+                        <input type="text" name="position" value={exp.position} onChange={(e) => handleItemChange('experience', idx, e)} placeholder="Job Title" className="input-field bg-white" />
                       </div>
                       <div className="space-y-1">
                         <label className="text-[10px] font-bold uppercase text-gray-400 tracking-widest">Start Date</label>
@@ -307,7 +307,7 @@ const ResumeForm = () => {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       <div className="sm:col-span-2 space-y-1">
                         <label className="text-[10px] font-bold uppercase text-gray-400 tracking-widest">Project Name</label>
-                        <input type="text" name="project_name" value={proj.project_name} onChange={(e) => handleItemChange('projects', idx, e)} placeholder="My Cool SaaS" className="input-field bg-white" />
+                        <input type="text" name="project_name" value={proj.project_name} onChange={(e) => handleItemChange('projects', idx, e)} placeholder="Project Name" className="input-field bg-white" />
                       </div>
                       <div className="space-y-1">
                         <label className="text-[10px] font-bold uppercase text-gray-400 tracking-widest">Technologies</label>

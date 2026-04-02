@@ -17,6 +17,7 @@ const Register = () => {
       navigate('/dashboard');
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed');
+      console.error('Registration error:', err);
     }
   };
 
@@ -42,7 +43,7 @@ const Register = () => {
                 required 
                 value={name} 
                 onChange={e => setName(e.target.value)}
-                placeholder="John Doe"
+                placeholder="Your Full Name"
                 className="input-field"
               />
             </div>
@@ -53,7 +54,7 @@ const Register = () => {
                 required 
                 value={email} 
                 onChange={e => setEmail(e.target.value)}
-                placeholder="name@example.com"
+                placeholder="your@email.com"
                 className="input-field"
               />
             </div>

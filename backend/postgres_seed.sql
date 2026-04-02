@@ -82,8 +82,8 @@ INSERT INTO users (id, full_name, email, password, created_at)
 VALUES
   (
     1,
-    'John Doe',
-    'john@example.com',
+    'Sample User',
+    'user@email.com',
     '$2b$10$SP8IR8rmRY9ihzQsOQDgk.0Fw8HaZ/uyqkRSbZ5V0RPQoCcsxolx.',
     CURRENT_TIMESTAMP
   )
@@ -109,13 +109,13 @@ VALUES
     1,
     1,
     'Senior Frontend Developer',
-    'John Doe',
-    'john@example.com',
-    '+250 788 123 456',
-    'Kigali, Rwanda',
-    'Frontend engineer with 5+ years of experience building responsive React applications, design systems, and user-focused product experiences.',
-    'https://www.linkedin.com/in/johndoe',
-    'https://johndoe.dev',
+    'Sample User',
+    'user@email.com',
+    '+1 234 567 890',
+    'City, Country',
+    'Experienced professional with a passion for building great products and delivering value through quality work.',
+    'https://www.linkedin.com/in/user',
+    'https://user.dev',
     'modern',
     CURRENT_TIMESTAMP,
     CURRENT_TIMESTAMP
