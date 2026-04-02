@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
       const token = localStorage.getItem('token');
       if (token) {
         try {
-          const res = await axios.get('http://localhost:5000/api/auth/profile', {
+          const res = await axios.get('/.netlify/functions/auth-profile', {
             headers: { Authorization: `Bearer ${token}` }
           });
           setUser(res.data);
@@ -28,13 +28,13 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (email, password) => {
-    const res = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+    const res = await axios.post('/.netlify/functions/auth-login', { email, password });
     localStorage.setItem('token', res.data.token);
     setUser(res.data);
   };
 
   const register = async (full_name, email, password) => {
-    const res = await axios.post('http://localhost:5000/api/auth/register', { full_name, email, password });
+    const res = await axios.post('/.netlify/functions/auth-register', { full_name, email, password });
     localStorage.setItem('token', res.data.token);
     setUser(res.data);
   };

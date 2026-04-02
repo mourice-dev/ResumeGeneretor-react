@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import { 
-  ChevronRight, 
-  ChevronLeft, 
-  Save, 
-  User, 
-  BookOpen, 
-  Briefcase, 
-  Cpu, 
-  Layers, 
+import {
+  ChevronRight,
+  ChevronLeft,
+  Save,
+  User,
+  BookOpen,
+  Briefcase,
+  Cpu,
+  Layers,
   CheckCircle,
   Plus,
   Trash2
@@ -20,7 +20,7 @@ const ResumeForm = () => {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
-  
+
   const [formData, setFormData] = useState({
     title: '',
     full_name: '',
@@ -41,7 +41,7 @@ const ResumeForm = () => {
     if (id) {
       const fetchResume = async () => {
         try {
-          const res = await axios.get(`http://localhost:5000/api/resumes/${id}`, {
+          const res = await axios.get(`/.netlify/functions/resumes-get-one?id=${id}`, {
             headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
           });
           setFormData(res.data);
@@ -58,14 +58,14 @@ const ResumeForm = () => {
   };
 
   const handleAddItem = (type) => {
-    const newItem = type === 'education' 
+    const newItem = type === 'education'
       ? { institution: '', degree: '', field_of_study: '', start_date: '', end_date: '', gpa: '', description: '' }
       : type === 'experience'
-      ? { company: '', position: '', start_date: '', end_date: '', current_job: false, description: '' }
-      : type === 'skills'
-      ? { skill_name: '', proficiency: 'Beginner' }
-      : { project_name: '', description: '', technologies: '', url: '' };
-    
+        ? { company: '', position: '', start_date: '', end_date: '', current_job: false, description: '' }
+        : type === 'skills'
+          ? { skill_name: '', proficiency: 'Beginner' }
+          : { project_name: '', description: '', technologies: '', url: '' };
+
     setFormData({ ...formData, [type]: [...formData[type], newItem] });
   };
 
@@ -86,11 +86,11 @@ const ResumeForm = () => {
     setLoading(true);
     try {
       if (id) {
-        await axios.put(`http://localhost:5000/api/resumes/${id}`, formData, {
+        await axios.put(`/.netlify/functions/resumes-update?id=${id}`, formData, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         });
       } else {
-        await axios.post('http://localhost:5000/api/resumes', formData, {
+        await axios.post('/.netlify/functions/resumes-create', formData, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         });
       }
@@ -160,8 +160,8 @@ const ResumeForm = () => {
                   <textarea name="summary" value={formData.summary} onChange={handleChange} rows="4" placeholder="Briefly describe your professional background..." className="input-field resize-none" />
                 </div>
                 <div className="sm:col-span-2 space-y-1">
-                   <label className="text-xs font-bold uppercase text-gray-400 tracking-widest">Address</label>
-                   <input type="text" name="address" value={formData.address} onChange={handleChange} placeholder="123 Street, City, Country" className="input-field" />
+                  <label className="text-xs font-bold uppercase text-gray-400 tracking-widest">Address</label>
+                  <input type="text" name="address" value={formData.address} onChange={handleChange} placeholder="123 Street, City, Country" className="input-field" />
                 </div>
               </div>
             </div>
@@ -170,7 +170,7 @@ const ResumeForm = () => {
           {/* Step 2: Education */}
           {step === 2 && (
             <div className="space-y-10 animate-in fade-in duration-500">
-               <div className="flex justify-between items-end">
+              <div className="flex justify-between items-end">
                 <div>
                   <h2 className="text-3xl font-black text-black tracking-tight mb-2">Education</h2>
                   <p className="text-gray-400 text-sm font-medium">Your academic background</p>
@@ -179,9 +179,9 @@ const ResumeForm = () => {
                   <Plus className="h-4 w-4" /> Add Item
                 </button>
               </div>
-              
+
               {formData.education.length === 0 && <div className="py-20 text-center border-2 border-dashed border-gray-100 rounded-3xl text-gray-300 font-bold uppercase tracking-widest text-xs">No entries added</div>}
-              
+
               <div className="space-y-8">
                 {formData.education.map((edu, idx) => (
                   <div key={idx} className="p-8 border border-gray-50 rounded-[32px] bg-gray-50/30 relative">
@@ -222,7 +222,7 @@ const ResumeForm = () => {
                   <Plus className="h-4 w-4" /> Add Item
                 </button>
               </div>
-              
+
               {formData.experience.length === 0 && <div className="py-20 text-center border-2 border-dashed border-gray-100 rounded-3xl text-gray-300 font-bold uppercase tracking-widest text-xs">No entries added</div>}
 
               <div className="space-y-8">
@@ -287,8 +287,8 @@ const ResumeForm = () => {
 
           {/* Step 5: Projects */}
           {step === 5 && (
-             <div className="space-y-10 animate-in fade-in duration-500 text-left">
-             <div className="flex justify-between items-end">
+            <div className="space-y-10 animate-in fade-in duration-500 text-left">
+              <div className="flex justify-between items-end">
                 <div>
                   <h2 className="text-3xl font-black text-black tracking-tight mb-2">Portfolio</h2>
                   <p className="text-gray-400 text-sm font-medium">Showcase your side projects</p>
@@ -297,8 +297,8 @@ const ResumeForm = () => {
                   <Plus className="h-4 w-4" /> Add Item
                 </button>
               </div>
-             
-             <div className="space-y-8">
+
+              <div className="space-y-8">
                 {formData.projects.map((proj, idx) => (
                   <div key={idx} className="p-8 border border-gray-50 rounded-[32px] bg-gray-50/30 relative">
                     <button onClick={() => handleRemoveItem('projects', idx)} className="absolute top-6 right-6 p-2 text-gray-300 hover:text-red-500 transition-colors"><Trash2 className="h-5 w-5" /></button>
@@ -322,8 +322,8 @@ const ResumeForm = () => {
                     </div>
                   </div>
                 ))}
-             </div>
-           </div>
+              </div>
+            </div>
           )}
 
           {/* Step 6: Review */}
@@ -335,8 +335,8 @@ const ResumeForm = () => {
               </div>
               <div className="p-10 bg-black text-white rounded-[40px] shadow-2xl shadow-black/20">
                 <div className="flex items-center gap-4 mb-8">
-                   <div className="w-12 h-12 bg-white text-black rounded-2xl flex items-center justify-center font-black text-xl">R</div>
-                   <h3 className="text-2xl font-black uppercase tracking-tighter">Summary Checklist</h3>
+                  <div className="w-12 h-12 bg-white text-black rounded-2xl flex items-center justify-center font-black text-xl">R</div>
+                  <h3 className="text-2xl font-black uppercase tracking-tighter">Summary Checklist</h3>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-6 gap-x-12 opacity-80 uppercase tracking-widest text-[10px] font-bold">
                   <div className="flex justify-between border-b border-white/10 pb-2"><span>Personal Details</span> <span className={formData.full_name ? 'text-green-400' : 'text-red-400'}>{formData.full_name ? 'COMPLETE' : 'INCOMPLETE'}</span></div>
@@ -352,30 +352,30 @@ const ResumeForm = () => {
 
         {/* Floating Action Bar */}
         <div className="p-8 px-16 bg-gray-50 border-t border-gray-100 flex justify-between items-center">
-          <button 
+          <button
             disabled={step === 1}
             onClick={() => setStep(step - 1)}
             className={`flex items-center gap-2 text-xs font-bold uppercase tracking-widest transition-all ${step === 1 ? 'opacity-0 scale-90' : 'text-gray-400 hover:text-black'}`}
           >
             <ChevronLeft className="h-4 w-4" /> Back
           </button>
-          
+
           <div className="flex items-center gap-4">
-             <span className="text-[10px] font-black uppercase tracking-tighter text-gray-300">Step {step} of 6</span>
-             {step < 6 ? (
-              <button 
+            <span className="text-[10px] font-black uppercase tracking-tighter text-gray-300">Step {step} of 6</span>
+            {step < 6 ? (
+              <button
                 onClick={() => setStep(step + 1)}
                 className="btn-black flex items-center gap-2 group"
               >
-                 Next Step <ChevronRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                Next Step <ChevronRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </button>
             ) : (
-              <button 
+              <button
                 onClick={handleSubmit}
                 disabled={loading}
                 className="btn-black bg-green-500 hover:bg-green-600 flex items-center gap-2"
               >
-                 {loading ? 'Processing...' : <><Save className="h-4 w-4" /> Finish & Save</>}
+                {loading ? 'Processing...' : <><Save className="h-4 w-4" /> Finish & Save</>}
               </button>
             )}
           </div>

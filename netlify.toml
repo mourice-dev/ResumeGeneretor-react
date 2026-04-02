@@ -1,0 +1,13 @@
+[build]
+  command = "npm run build"
+  functions = "netlify/functions"
+  publish = "frontend/dist"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
+
+[functions]
+  external_node_modules = ["postgres", "bcrypt", "jsonwebtoken"]
+  nodejs_version = "18"

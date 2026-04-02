@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
-import { 
-  Printer, 
-  ArrowLeft, 
-  Mail, 
-  Phone, 
-  MapPin, 
-  Globe, 
+import {
+  Printer,
+  ArrowLeft,
+  Mail,
+  Phone,
+  MapPin,
+  Globe,
   ExternalLink,
   Target
 } from 'lucide-react';
@@ -22,7 +22,7 @@ const ResumePreview = () => {
   useEffect(() => {
     const fetchResume = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/resumes/${id}`, {
+        const res = await axios.get(`/.netlify/functions/resumes-get-one?id=${id}`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         });
         setResume(res.data);
@@ -60,16 +60,16 @@ const ResumePreview = () => {
         <header className="border-b-8 border-black pb-10 mb-12">
           <h1 className="text-5xl font-black text-black tracking-tighter uppercase mb-4 leading-[0.8]">{resume.full_name || "Name Needed"}</h1>
           <p className="text-xl text-gray-400 font-bold uppercase tracking-widest mb-6">{resume.title || "Position Title"}</p>
-          
+
           <div className="flex flex-wrap gap-y-3 gap-x-8 text-[10px] font-black uppercase tracking-widest text-gray-500">
             {resume.email && <div className="flex items-center gap-2 border-r border-gray-100 pr-8 last:border-0"><Mail className="h-3 w-3" /> {resume.email}</div>}
             {resume.phone && <div className="flex items-center gap-2 border-r border-gray-100 pr-8 last:border-0"><Phone className="h-3 w-3" /> {resume.phone}</div>}
             {resume.address && <div className="flex items-center gap-2 last:border-0"><MapPin className="h-3 w-3" /> {resume.address}</div>}
           </div>
-          
+
           <div className="flex flex-wrap gap-y-3 gap-x-8 text-[10px] font-black uppercase tracking-widest text-black mt-4">
-             {resume.linkedin && <a href={resume.linkedin} target="_blank" className="flex items-center gap-2 hover:underline"><Target className="h-3 w-3" /> LinkedIn</a>}
-             {resume.website && <a href={resume.website} target="_blank" className="flex items-center gap-2 hover:underline"><Globe className="h-3 w-3" /> Portfolio</a>}
+            {resume.linkedin && <a href={resume.linkedin} target="_blank" className="flex items-center gap-2 hover:underline"><Target className="h-3 w-3" /> LinkedIn</a>}
+            {resume.website && <a href={resume.website} target="_blank" className="flex items-center gap-2 hover:underline"><Globe className="h-3 w-3" /> Portfolio</a>}
           </div>
         </header>
 
@@ -105,17 +105,17 @@ const ResumePreview = () => {
           {/* Skills */}
           {resume.skills?.length > 0 && (
             <section>
-               <h2 className="text-xs font-black text-black uppercase tracking-[0.3em] mb-6 border-l-4 border-black pl-4">Skills & Tools</h2>
-               <div className="flex flex-wrap gap-x-6 gap-y-3">
-                  {resume.skills.map((sk, i) => (
-                    <div key={i} className="flex items-center gap-2">
-                      <div className="w-1.5 h-1.5 bg-black rounded-full" />
-                      <span className="text-xs font-bold text-gray-700 uppercase tracking-tighter">
-                        {sk.skill_name} <span className="text-gray-300 ml-1">[{sk.proficiency}]</span>
-                      </span>
-                    </div>
-                  ))}
-               </div>
+              <h2 className="text-xs font-black text-black uppercase tracking-[0.3em] mb-6 border-l-4 border-black pl-4">Skills & Tools</h2>
+              <div className="flex flex-wrap gap-x-6 gap-y-3">
+                {resume.skills.map((sk, i) => (
+                  <div key={i} className="flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 bg-black rounded-full" />
+                    <span className="text-xs font-bold text-gray-700 uppercase tracking-tighter">
+                      {sk.skill_name} <span className="text-gray-300 ml-1">[{sk.proficiency}]</span>
+                    </span>
+                  </div>
+                ))}
+              </div>
             </section>
           )}
 
@@ -142,7 +142,7 @@ const ResumePreview = () => {
           {resume.projects?.length > 0 && (
             <section>
               <h2 className="text-xs font-black text-black uppercase tracking-[0.3em] mb-6 border-l-4 border-black pl-4">Projects</h2>
-               <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
                 {resume.projects.map((proj, i) => (
                   <div key={i} className="p-6 bg-gray-50/50 border border-gray-100 rounded-2xl relative group hover:bg-black hover:text-white transition-all">
                     <div className="flex items-center gap-2 mb-3">
@@ -153,15 +153,15 @@ const ResumePreview = () => {
                     <p className="text-xs font-medium leading-relaxed opacity-70 group-hover:opacity-100 line-clamp-3">{proj.description}</p>
                   </div>
                 ))}
-               </div>
+              </div>
             </section>
           )}
         </div>
 
         {/* Footer */}
         <footer className="mt-20 pt-10 border-t border-gray-100 text-center">
-           <div className="w-8 h-8 bg-black text-white rounded-lg flex items-center justify-center font-black text-sm mx-auto mb-4 opacity-20">R</div>
-           <p className="text-[10px] text-gray-300 font-bold uppercase tracking-[0.5em]">System Generated &bull; ResumeForge Platform</p>
+          <div className="w-8 h-8 bg-black text-white rounded-lg flex items-center justify-center font-black text-sm mx-auto mb-4 opacity-20">R</div>
+          <p className="text-[10px] text-gray-300 font-bold uppercase tracking-[0.5em]">System Generated &bull; ResumeForge Platform</p>
         </footer>
       </div>
     </div>

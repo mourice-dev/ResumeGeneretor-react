@@ -17,7 +17,7 @@ const Dashboard = () => {
 
   const fetchResumes = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/resumes', {
+      const res = await axios.get('/.netlify/functions/resumes-list', {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
       });
       setResumes(res.data);
@@ -29,7 +29,7 @@ const Dashboard = () => {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this resume?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/resumes/${id}`, {
+        await axios.delete(`/.netlify/functions/resumes-delete?id=${id}`, {
           headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
         });
         fetchResumes();
@@ -39,7 +39,7 @@ const Dashboard = () => {
     }
   };
 
-  const filteredResumes = resumes.filter(r => 
+  const filteredResumes = resumes.filter(r =>
     r.title.toLowerCase().includes(search.toLowerCase()) &&
     (dateFilter ? r.created_at.startsWith(dateFilter) : true)
   );
@@ -51,7 +51,7 @@ const Dashboard = () => {
           <h1 className="text-4xl font-black text-black tracking-tighter mb-2">My Resumes</h1>
           <p className="text-gray-400 font-medium">Manage and refine your professional profiles</p>
         </div>
-        <button 
+        <button
           onClick={() => navigate('/resume-builder')}
           className="btn-black flex items-center gap-2 group"
         >
@@ -63,9 +63,9 @@ const Dashboard = () => {
       {/* Search & Filter Bar */}
       <div className="bg-white p-4 rounded-2xl border border-gray-100 shadow-sm mb-10 flex flex-wrap gap-4">
         <div className="flex-grow min-w-[200px] relative">
-          <input 
-            type="text" 
-            placeholder="Search by title..." 
+          <input
+            type="text"
+            placeholder="Search by title..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             className="w-full bg-gray-50 border-none rounded-xl px-4 py-3 text-sm focus:ring-2 focus:ring-black"
@@ -73,8 +73,8 @@ const Dashboard = () => {
         </div>
         <div className="flex items-center gap-2 bg-gray-50 px-4 py-1 rounded-xl border border-transparent">
           <Calendar className="h-4 w-4 text-gray-400" />
-          <input 
-            type="date" 
+          <input
+            type="date"
             value={dateFilter}
             onChange={(e) => setDateFilter(e.target.value)}
             className="bg-transparent border-none text-sm focus:ring-0"
@@ -103,22 +103,22 @@ const Dashboard = () => {
                   <span className="bg-gray-100 px-2 py-0.5 rounded uppercase">{r.template}</span>
                 </div>
               </div>
-              
+
               <div className="flex gap-4 border-t border-gray-50 pt-6">
-                <button 
+                <button
                   onClick={() => navigate(`/resume-builder/${r.id}`)}
                   className="flex-grow flex items-center justify-center gap-2 py-2 bg-gray-50 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-black hover:text-white transition-all"
                 >
                   <Edit3 className="h-4 w-4" /> Edit
                 </button>
-                <button 
+                <button
                   onClick={() => navigate(`/preview/${r.id}`)}
                   className="p-2 bg-gray-50 rounded-xl text-gray-400 hover:text-black transition-colors"
                   title="Preview"
                 >
                   <Eye className="h-5 w-5" />
                 </button>
-                <button 
+                <button
                   onClick={() => handleDelete(r.id)}
                   className="p-2 bg-gray-50 rounded-xl text-gray-400 hover:text-red-500 transition-colors"
                   title="Delete"
