@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Plus, Edit3, Trash2, Eye, Calendar, Clock, FileText } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_URL = import.meta.env.VITE_API_URL || '/api';
 
 const Dashboard = () => {
   const { user } = useAuth();
