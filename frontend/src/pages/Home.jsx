@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import { FileText, Edit3, Search } from 'lucide-react';
 
 const Home = () => {
   const { user } = useAuth();
+
+  useEffect(() => {
+    document.title = 'ResumE - Build Your Professional Resume';
+  }, []);
 
   return (
     <div className="flex-grow flex flex-col">
@@ -15,7 +19,7 @@ const Home = () => {
             v1.0 Released
           </span>
           <h1 className="text-6xl sm:text-8xl font-black text-black tracking-tighter leading-[0.9] mb-8">
-            Build your legacy<br/>
+            Build your legacy<br />
             <span className="text-gray-300">on one page.</span>
           </h1>
           <p className="text-xl text-gray-500 mb-10 max-w-[600px] mx-auto font-light leading-relaxed">
@@ -44,7 +48,7 @@ const Home = () => {
             <h3 className="text-xl font-bold mb-3 text-black">Smart Templates</h3>
             <p className="text-gray-500 leading-relaxed text-sm">Minimalist, executive-grade templates designed to make your resume stand out.</p>
           </div>
-          
+
           <div className="group p-8 rounded-2xl border border-transparent hover:border-gray-100 hover:bg-gray-50/50 transition-all">
             <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center mb-6 border border-gray-200 group-hover:bg-black group-hover:text-white transition-all">
               <Edit3 className="h-6 w-6" />
@@ -66,7 +70,7 @@ const Home = () => {
       {/* Footer */}
       <footer className="mt-auto py-12 px-6 border-t border-gray-100 bg-gray-50/50">
         <div className="max-w-[1200px] mx-auto flex justify-between items-center text-sm text-gray-400">
-          <div>&copy; 2026 ResumeForge Inc. All rights reserved.</div>
+          <div>&copy; 2026 ResumE. All rights reserved.</div>
           <div className="flex gap-8">
             <a href="#" className="hover:text-black transition-colors">Privacy</a>
             <a href="#" className="hover:text-black transition-colors">Terms</a>

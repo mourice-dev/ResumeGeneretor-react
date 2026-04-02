@@ -9,9 +9,15 @@ const Navbar = () => {
   return (
     <nav className="glass sticky top-0 z-50">
       <div className="max-w-[1200px] mx-auto px-6 py-4 flex justify-between items-center">
-        <Link to="/" className="flex items-center gap-2 text-black no-underline">
-          <div className="w-8 h-8 bg-black text-white rounded-lg flex items-center justify-center font-bold text-sm">R</div>
-          <span className="text-xl font-bold tracking-tighter">ResumeForge</span>
+        <Link to="/" className="flex items-center gap-3 text-black no-underline">
+          <img
+            src="/brand/resume-logo.png"
+            alt="ResumE logo"
+            className="w-8 h-8 object-contain"
+          />
+          <span className="text-xl font-bold tracking-tighter">
+            Resum<span className="font-black text-2xl leading-none">E</span>
+          </span>
         </Link>
         <div className="flex items-center gap-4">
           {user ? (

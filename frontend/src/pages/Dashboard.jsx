@@ -15,6 +15,10 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    document.title = 'ResumE - My Resumes';
+  }, []);
+
+  useEffect(() => {
     fetchResumes();
   }, []);
 

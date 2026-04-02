@@ -24,6 +24,10 @@ const ResumeForm = () => {
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
 
+  useEffect(() => {
+    document.title = id ? 'ResumE - Edit Resume' : 'ResumE - Create Resume';
+  }, [id]);
+
   const [formData, setFormData] = useState({
     title: '',
     full_name: '',

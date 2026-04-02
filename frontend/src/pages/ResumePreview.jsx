@@ -1,9 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
-import { getApiUrl } from '../utils/apiUrl.js';
-
-const API_URL = getApiUrl();
 import {
   Printer,
   ArrowLeft,
@@ -14,13 +11,20 @@ import {
   ExternalLink,
   Target
 } from 'lucide-react';
+import { getApiUrl } from '../utils/apiUrl.js';
+
+const API_URL = getApiUrl();
 
 const ResumePreview = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
   const [resume, setResume] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isExporting, setIsExporting] = useState(false);
   const resumeRef = useRef();
+
+  useEffect(() => {
+    document.title = 'ResumE - Preview Resume';
+  }, []);
 
   useEffect(() => {
     const fetchResume = async () => {
@@ -38,8 +42,41 @@ const ResumePreview = () => {
     fetchResume();
   }, [id]);
 
-  const handlePrint = () => {
-    window.print();
+  const handlePrint = async () => {
+    if (!resumeRef.current || isExporting) {
+      return;
+    }
+
+    try {
+      setIsExporting(true);
+      const html2pdfModule = await import('html2pdf.js');
+      const html2pdf = html2pdfModule.default;
+      const safeName = (resume?.full_name || 'resume').trim().replace(/\s+/g, '_');
+
+      await html2pdf()
+        .set({
+          margin: [8, 8, 8, 8],
+          filename: `${safeName}.pdf`,
+          image: { type: 'jpeg', quality: 0.98 },
+          html2canvas: {
+            scale: 2,
+            useCORS: true,
+            backgroundColor: '#ffffff'
+          },
+          jsPDF: {
+            unit: 'mm',
+            format: 'a4',
+            orientation: 'portrait'
+          },
+          pagebreak: { mode: ['css', 'legacy'] }
+        })
+        .from(resumeRef.current)
+        .save();
+    } catch (err) {
+      console.error('Failed to export PDF:', err);
+    } finally {
+      setIsExporting(false);
+    }
   };
 
   if (loading) return <div className="flex justify-center items-center h-screen text-black font-black text-2xl uppercase tracking-tighter">Rendering...</div>;
@@ -52,8 +89,12 @@ const ResumePreview = () => {
         <Link to="/dashboard" className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gray-400 hover:text-black transition-colors group">
           <ArrowLeft className="h-4 w-4 group-hover:-translate-x-1 transition-transform" /> Back
         </Link>
-        <button onClick={handlePrint} className="btn-black flex items-center gap-2 py-2 px-6 text-xs uppercase tracking-widest shadow-xl shadow-black/10">
-          <Printer className="h-4 w-4" /> Print PDF
+        <button
+          onClick={handlePrint}
+          disabled={isExporting}
+          className="btn-black flex items-center gap-2 py-2 px-6 text-xs uppercase tracking-widest shadow-xl shadow-black/10 disabled:opacity-60 disabled:cursor-not-allowed"
+        >
+          <Printer className="h-4 w-4" /> {isExporting ? 'Exporting...' : 'Download PDF'}
         </button>
       </div>
 
@@ -163,8 +204,17 @@ const ResumePreview = () => {
 
         {/* Footer */}
         <footer className="mt-20 pt-10 border-t border-gray-100 text-center">
-          <div className="w-8 h-8 bg-black text-white rounded-lg flex items-center justify-center font-black text-sm mx-auto mb-4 opacity-20">R</div>
-          <p className="text-[10px] text-gray-300 font-bold uppercase tracking-[0.5em]">System Generated &bull; ResumeForge Platform</p>
+          <div className="flex items-center justify-center gap-3 mb-4 opacity-70">
+            <img
+              src="/brand/resume-logo.png"
+              alt="ResumE logo"
+              className="w-7 h-7 object-contain"
+            />
+            <span className="text-sm font-bold tracking-tight text-gray-400">
+              Resum<span className="font-black text-base leading-none">E</span>
+            </span>
+          </div>
+          <p className="text-[10px] text-gray-300 font-bold uppercase tracking-[0.5em]">Ready to Print &bull; ResumE Platform</p>
         </footer>
       </div>
     </div>
