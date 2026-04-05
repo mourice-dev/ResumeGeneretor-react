@@ -32,7 +32,7 @@ const ResumeForm = () => {
     title: '',
     full_name: '',
     email: '',
-    phone: '',
+    phone: '+250',
     address: '',
     summary: '',
     linkedin: '',
@@ -160,7 +160,7 @@ const ResumeForm = () => {
                 </div>
                 <div className="space-y-1">
                   <label className="text-xs font-bold uppercase text-gray-400 tracking-widest">Phone</label>
-                  <input type="text" name="phone" value={formData.phone} onChange={handleChange} placeholder="+1 234 567 890" className="input-field" />
+                  <input type="text" name="phone" value={formData.phone} onChange={handleChange} placeholder="+250 7XX XXX XXX" className="input-field" />
                 </div>
                 <div className="sm:col-span-2 space-y-1">
                   <label className="text-xs font-bold uppercase text-gray-400 tracking-widest">About Me</label>

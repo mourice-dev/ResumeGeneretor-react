@@ -53,28 +53,48 @@ const ResumePreview = () => {
       const html2pdf = html2pdfModule.default;
       const safeName = (resume?.full_name || 'resume').trim().replace(/\s+/g, '_');
 
-      await html2pdf()
-        .set({
-          margin: [8, 8, 8, 8],
-          filename: `${safeName}.pdf`,
-          image: { type: 'jpeg', quality: 0.98 },
-          html2canvas: {
-            scale: 2,
-            useCORS: true,
-            backgroundColor: '#ffffff'
-          },
-          jsPDF: {
-            unit: 'mm',
-            format: 'a4',
-            orientation: 'portrait'
-          },
-          pagebreak: { mode: ['css', 'legacy'] }
-        })
-        .from(resumeRef.current)
-        .save();
+      const element = resumeRef.current;
+      
+      // Use a Promise-based approach to ensure PDF generation completes
+      return new Promise((resolve, reject) => {
+        try {
+          html2pdf()
+            .set({
+              margin: [8, 8, 8, 8],
+              filename: `${safeName}.pdf`,
+              image: { type: 'jpeg', quality: 0.98 },
+              html2canvas: {
+                scale: 2,
+                useCORS: true,
+                backgroundColor: '#ffffff',
+                allowTaint: true
+              },
+              jsPDF: {
+                unit: 'mm',
+                format: 'a4',
+                orientation: 'portrait'
+              },
+              pagebreak: { mode: ['css', 'legacy'] }
+            })
+            .from(element)
+            .save()
+            .then(() => {
+              setIsExporting(false);
+              resolve();
+            })
+            .catch((err) => {
+              console.error('Failed to export PDF:', err);
+              setIsExporting(false);
+              reject(err);
+            });
+        } catch (err) {
+          console.error('Failed to export PDF:', err);
+          setIsExporting(false);
+          reject(err);
+        }
+      });
     } catch (err) {
       console.error('Failed to export PDF:', err);
-    } finally {
       setIsExporting(false);
     }
   };
