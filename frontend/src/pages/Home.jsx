@@ -15,9 +15,6 @@ const Home = () => {
       {/* Hero Section */}
       <section className="py-24 px-6 text-center border-b border-gray-100 relative">
         <div className="max-w-[800px] mx-auto z-10 relative">
-          <span className="inline-block mb-6 px-4 py-1 bg-gray-100 border border-gray-200 rounded-full text-[11px] font-bold text-gray-500 uppercase tracking-widest">
-            v1.0 Released
-          </span>
           <h1 className="text-6xl sm:text-8xl font-black text-black tracking-tighter leading-[0.9] mb-8">
             Build your legacy<br />
             <span className="text-gray-300">on one page.</span>
