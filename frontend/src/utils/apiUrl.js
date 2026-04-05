@@ -4,9 +4,13 @@ export const getApiUrl = () => {
     typeof window !== 'undefined' &&
     ['localhost', '127.0.0.1'].includes(window.location.hostname);
 
-  if (isLocalHost && envUrl) {
-    return envUrl;
+  if (envUrl) {
+    return envUrl.replace(/\/$/, '');
   }
 
-  return '/api';
+  if (isLocalHost) {
+    return 'http://localhost:5000/api';
+  }
+
+  return '/_/backend/api';
 };
